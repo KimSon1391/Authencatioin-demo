@@ -21,7 +21,7 @@ function Register(props) {
 
       //Dispatch register
       const resultAction = await dispatch(register(values));
-      const user = unwrapResult(resultAction);
+      unwrapResult(resultAction);
 
       //close dialog
       const { closeDialog } = props;
@@ -30,7 +30,6 @@ function Register(props) {
       }
 
       //register successfully
-      console.log('New User:', user);
       enqueueSnackbar('Regiter Successfully!!', { variant: 'success' });
     } catch (error) {
       //register failed

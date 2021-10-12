@@ -34,11 +34,11 @@ function PasswordField(props) {
       control={control}
       render={({
         field: { onChange, onBlur, value, name },
-        fieldState: { isTouched, invalid, error },
+        fieldState: { invalid, error },
       }) => (
         <>
           <FormControl
-            error={isTouched && invalid}
+            error={invalid}
             fullWidth
             margin="normal"
             variant="outlined"

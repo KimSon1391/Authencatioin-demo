@@ -14,7 +14,7 @@ import { logout } from 'feature/Auth/userSlice';
 import * as React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import './headerbar.scss';
 
 HeaderBar.propTypes = {};
@@ -26,6 +26,7 @@ const MODE = {
 
 function HeaderBar(props) {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
@@ -36,26 +37,27 @@ function HeaderBar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
 
-  const handleClickOpen = () => {
+  const handleOpenDialog = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleCloseDialog = () => {
     setOpen(false);
   };
 
-  const handleMenuClick = (e) => {
+  const handleOpenMenu = (e) => {
     setAnchorEl(e.currentTarget);
   };
 
-  const handleMenuClose = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null);
   };
 
   const handleLogout = () => {
     dispatch(logout());
 
-    handleMenuClose();
+    handleCloseMenu();
+    history.push('/');
   };
 
   return (
@@ -70,7 +72,7 @@ function HeaderBar(props) {
               </Link>
             </Typography>
             {!isLoggedIn && (
-              <Button color="inherit" onClick={handleClickOpen}>
+              <Button color="inherit" onClick={handleOpenDialog}>
                 Login
               </Button>
             )}
@@ -82,7 +84,7 @@ function HeaderBar(props) {
                 <NavLink className="link" to="/album">
                   <Button color="inherit">Album</Button>
                 </NavLink>
-                <IconButton color="inherit" onClick={handleMenuClick}>
+                <IconButton color="inherit" onClick={handleOpenMenu}>
                   <AccountCircle />
                 </IconButton>
               </>
@@ -95,7 +97,7 @@ function HeaderBar(props) {
         aria-labelledby="demo-positioned-button"
         anchorEl={anchorEl}
         open={openMenu}
-        onClose={handleMenuClose}
+        onClose={handleCloseMenu}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
@@ -105,14 +107,14 @@ function HeaderBar(props) {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+        <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
 
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseDialog}
         disableEscapeKeyDown
         onClick={(event, reason) => {
           if (reason === 'backdropClick') {
@@ -120,14 +122,14 @@ function HeaderBar(props) {
           }
         }}
       >
-        <IconButton className="close__button" onClick={handleClose}>
+        <IconButton className="close__button" onClick={handleCloseDialog}>
           <Close />
         </IconButton>
 
         <DialogContent>
           {mode === MODE.REGISTER && (
             <>
-              <Register closeDialog={handleClose} />
+              <Register closeDialog={handleCloseDialog} />
               <Box textAlign="center">
                 <Button
                   color="primary"
@@ -142,7 +144,7 @@ function HeaderBar(props) {
           )}
           {mode === MODE.LOGIN && (
             <>
-              <Login closeDialog={handleClose} />
+              <Login closeDialog={handleCloseDialog} />
               <Box textAlign="center">
                 <Button
                   color="primary"
@@ -150,7 +152,7 @@ function HeaderBar(props) {
                     setMode(MODE.REGISTER);
                   }}
                 >
-                  Already have an account? Login here.
+                  Do not have an account? Register here.
                 </Button>
               </Box>
             </>
