@@ -1,0 +1,15 @@
+.filter__category {
+    padding-bottom: 16px;
+    &__list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        & > li {
+            margin-top: 10px;
+            &:hover {
+                cursor: pointer;
+                color: #1976d2;
+            }
+        }
+    }
+}

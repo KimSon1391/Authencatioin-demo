@@ -1,0 +1,17 @@
+.products__list {
+    &--left {
+        width: 250px;
+    }
+    &--right {
+        flex: 1;
+    }
+    &--pagination {
+        margin-top: 30px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+    }
+    &__wrap {
+        padding-bottom: 20px;
+    }
+}

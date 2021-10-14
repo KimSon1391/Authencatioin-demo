@@ -1,6 +1,7 @@
 import Header from 'components/Header/Header';
 import Album from 'feature/Album/Album';
 import Home from 'feature/Home/Home';
+import ProductFeature from 'feature/Products/ProductFeature';
 import Todo from 'feature/Todo/Todo';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router';
@@ -15,6 +16,7 @@ function App() {
       <Header />
       <Switch>
         <Route path="/" exact component={Home} />
+        <Route path="/products" component={ProductFeature} />
         {isLoggedIn && (
           <>
             <Route path="/todo" component={Todo} />
