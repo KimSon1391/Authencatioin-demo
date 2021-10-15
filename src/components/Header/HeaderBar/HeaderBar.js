@@ -1,6 +1,6 @@
-import { AccountCircle, Close } from '@mui/icons-material';
+import { AccountCircle, Close, ShoppingCart } from '@mui/icons-material';
 import CodeIcon from '@mui/icons-material/Code';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { Badge, IconButton, Menu, MenuItem } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Login from 'feature/Auth/components/Login/Login';
 import Register from 'feature/Auth/components/Register/Register';
 import { logout } from 'feature/Auth/userSlice';
+import { cartItemsCountSelector } from 'feature/Cart/selectors';
 import * as React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,6 +38,8 @@ function HeaderBar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
 
+  const cartItemCount = useSelector(cartItemsCountSelector);
+
   const handleOpenDialog = () => {
     setOpen(true);
   };
@@ -57,7 +60,10 @@ function HeaderBar(props) {
     dispatch(logout());
 
     handleCloseMenu();
-    history.push('/');
+  };
+
+  const handleCartClick = () => {
+    history.push('/cart');
   };
 
   return (
@@ -84,6 +90,19 @@ function HeaderBar(props) {
                 <NavLink className="link" to="/album">
                   <Button color="inherit">Album</Button>
                 </NavLink>
+                <NavLink className="link" to="/products">
+                  <Button color="inherit">products</Button>
+                </NavLink>
+                <IconButton
+                  size="large"
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                  onClick={handleCartClick}
+                >
+                  <Badge badgeContent={cartItemCount} color="error">
+                    <ShoppingCart />
+                  </Badge>
+                </IconButton>
                 <IconButton color="inherit" onClick={handleOpenMenu}>
                   <AccountCircle />
                 </IconButton>

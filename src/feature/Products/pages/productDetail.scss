@@ -1,0 +1,15 @@
+.products__detail {
+    &--left {
+        width: 400px;
+        padding: 12px;
+        border-right: 1px solid #aaaaaa64;
+    }
+    &--right {
+        flex: 1;
+        padding: 30px;
+    }
+
+    &__wrap {
+        padding-bottom: 20px;
+    }
+}
